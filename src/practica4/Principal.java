@@ -39,14 +39,16 @@ public class Principal {
     Torneo tor=new Torneo(Long.parseLong("151"),"14/Dic/2018",est);
     Grupo gr=new Grupo(Long.parseLong("161"),"Grupo A",4);
     Equipo e=new Equipo(Long.parseLong("171"),25,p,tor,gr);
-        
-    Eq.add(e);
-    Pa.add(p);
-    To.add(tor);
-    E.add(est);
-    G.add(gr);
+    Jugador ju=new Jugador(Long.parseLong("181"),"Alex","Aguinaga",p,e);
         
     GestionDato gd=new GestionDato(Eq,Pa,To,E,G,J);
+    
+    gd.persistirPais(p);
+    gd.persistirEquipo(e);
+    gd.persistirGrupo(gr);
+    gd.persistirJugador(ju);
+    gd.persistirEstadio(est);
+    gd.persistirTorneo(tor);
         
     VentanaPrincipal v = new VentanaPrincipal("Archivos Binarios",gd);
         v.setVisible(true);
