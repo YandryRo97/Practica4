@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Estadio;
 import vista.VentanaEstadio;
@@ -41,22 +43,27 @@ public class EventoEstadio implements ActionListener {
                 String ciudad = this.ventanaEstadio.getTxtList().get(2).getText();
                 Long capacidad = Long.parseLong(this.ventanaEstadio.getTxtList().get(3).getText());
 
-                for (Estadio es : this.ventanaEstadio.getGestionDato().getEstadioList()) {
+                for (Estadio es : this.ventanaEstadio.getGestionDato().leerEstadio()) {
                     if (nombre.equals(es.getNombre())) {
                         throw new ExcepcionDatoRepetido("Nombre repetido");
                     }
                 }
                 Estadio e = new Estadio(id, nombre, ciudad, capacidad);
-                ventanaEstadio.getGestionDato().getEstadioList().add(e);
+                
+                try {
+                    this.ventanaEstadio.getGestionDato().persistirEstadio(e);
+                } catch (Exception ex) {
+                    Logger.getLogger(EventoEstadio.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JOptionPane.showMessageDialog(this.ventanaEstadio, "Guardado");
                 
                 //AQUI VA EL METODO PERSIST PAIS DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                this.ventanaEstadio.getGestionDato().persistirEstadio(e);
+                
                 //AQUI VA EL METODO LEER PAIS DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                this.ventanaEstadio.getGestionDato().leerEstadio();
+                
             }
 
-            Object[][] datosEstadio = this.ventanaEstadio.cargaDatosTabla(this.ventanaEstadio.getGestionDato().getEstadioList().size(), 4);
+            Object[][] datosEstadio = this.ventanaEstadio.cargaDatosTabla(this.ventanaEstadio.getGestionDato().leerEstadio().size(), 4);
             this.ventanaEstadio.setDatos(datosEstadio);
             this.ventanaEstadio.getModeloTabla().setDataVector(this.ventanaEstadio.getDatos(), this.ventanaEstadio.getEncabezado());
         } catch (NumberFormatException ex) {

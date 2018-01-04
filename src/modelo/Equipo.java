@@ -23,6 +23,9 @@ public class Equipo implements Serializable
     private Torneo torneo;
     private Grupo grupo;
 
+    public Equipo() {
+    }
+
     public Equipo(Long id, int numJugadores, Pais pais, Torneo torneo, Grupo grupo) {
         this.id = id;
         this.numJugadores = numJugadores;
@@ -74,9 +77,6 @@ public class Equipo implements Serializable
         this.grupo = grupo;
     }
 
-    @Override
-    public String toString() {
-        return "Equipo{" + "id=" + id + ", numJugadores=" + numJugadores + ", pais=" + pais + ", torneo=" + torneo + ", grupo=" + grupo + '}';
-    }
+    
 }
 

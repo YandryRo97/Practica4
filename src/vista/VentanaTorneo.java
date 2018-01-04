@@ -74,7 +74,7 @@ public class VentanaTorneo extends JInternalFrame{
         this.encabezado[1] = "Fecha inscripcion";
         this.encabezado[2] = "Estadio";
         
-        this.datos = cargaDatosTabla(this.gestionDato.getTorneoList().size(),3);
+        this.datos = cargaDatosTabla(this.gestionDato.leerTorneo().size(),3);
         this.modeloTabla = new DefaultTableModel(this.datos, this.encabezado);
         this.tabla = new JTable(modeloTabla);
         this.scroll = new JScrollPane(this.tabla);
@@ -106,7 +106,7 @@ public class VentanaTorneo extends JInternalFrame{
         
         Object[][] retorno = new Object[h][w];
         int i=0;
-        for(Torneo t: this.gestionDato.getTorneoList()){
+        for(Torneo t: this.gestionDato.leerTorneo()){
             
             retorno[i][0] = t.getId();
             retorno[i][1] = t.getFechaIns();
@@ -121,7 +121,7 @@ public class VentanaTorneo extends JInternalFrame{
     public void cargarCombo(){
         
         this.combo.removeAllItems();
-        for(Torneo to : this.gestionDato.getTorneoList()){
+        for(Torneo to : this.gestionDato.leerTorneo()){
             this.combo.addItem(to.getEstadio());
         }
         

@@ -77,7 +77,7 @@ public class VentanaPais  extends JInternalFrame{
         this.encabezado[2]="Nacionalidad";
         this.encabezado[3]="Habitantes";
         
-        this.datos = cargaDatosTabla(this.gestionDato.getPaisList().size(),4);
+        this.datos = cargaDatosTabla(this.gestionDato.leerPais().size(),4);
         this.modeloTabla = new DefaultTableModel(this.datos,this.encabezado);
         this.tabla = new JTable(modeloTabla);
         this.scroll = new JScrollPane(this.tabla);
@@ -110,7 +110,7 @@ public class VentanaPais  extends JInternalFrame{
     {
         Object[][]retorno=new Object[h][w];
         int i=0;
-        for(Pais p:this.gestionDato.getPaisList())
+        for(Pais p:this.gestionDato.leerPais())
         {
            retorno[i][0]=p.getId();
            retorno[i][1]=p.getNombre();

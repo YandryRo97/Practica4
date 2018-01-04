@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Grupo;
 import vista.VentanaGrupo;
@@ -51,7 +53,7 @@ public class EventoGrupo  implements ActionListener{
                 String  n= this.ventanaGrupo.getTxtList().get(1).getText();
                 int numEqui = Integer.parseInt(this.ventanaGrupo.getTxtList().get(2).getText());
                
-                for (Grupo gr:this.ventanaGrupo.getGestionDato().getGrupoList()) 
+                for (Grupo gr:this.ventanaGrupo.getGestionDato().leerGrupo()) 
                 {
                     if ((id == gr.getId())&& (n == gr.getNombre()) && (numEqui== gr.getNumeroEqui()))
                     {
@@ -59,16 +61,22 @@ public class EventoGrupo  implements ActionListener{
                     }
                 }
                 Grupo grupo = new Grupo(id,n,numEqui);
+                
                 JOptionPane.showMessageDialog(this.ventanaGrupo,"Guardado");
-                ventanaGrupo.getGestionDato().getGrupoList().add(grupo);
-              
-                //AQUI VA EL METODO PERSIST EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                this.ventanaGrupo.getGestionDato().persistirGrupo(grupo);
-                //AQUI VA EL METODO LEE EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                this.ventanaGrupo.getGestionDato().leerGrupo();
+                
+               try {
+                   this.ventanaGrupo.getGestionDato().persistirGrupo(grupo);
+                   
+                   //AQUI VA EL METODO PERSIST EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                   
+                   //AQUI VA EL METODO LEE EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+               } catch (Exception ex) {
+                   Logger.getLogger(EventoGrupo.class.getName()).log(Level.SEVERE, null, ex);
+               }
+                
            }
            
-           Object[][]datos = this.ventanaGrupo.cargaDatosTabla(this.ventanaGrupo.getGestionDato().getGrupoList().size(),3);
+           Object[][]datos = this.ventanaGrupo.cargaDatosTabla(this.ventanaGrupo.getGestionDato().leerGrupo().size(),3);
            this.ventanaGrupo.setDatos(datos);
            this.ventanaGrupo.getModeloTabla().setDataVector(this.ventanaGrupo.getDatos(), this.ventanaGrupo.getEncabezado());
          

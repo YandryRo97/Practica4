@@ -80,7 +80,7 @@ public class VentanaJugador extends JInternalFrame{
         this.encabezado[3]="Pais";
         this.encabezado[4]="Equipo";
         
-        this.datos = cargaDatosTabla(this.gestionDato.getEquipoList().size(),5);
+        this.datos = cargaDatosTabla(this.gestionDato.leerJugador().size(),5);
         
         this.modeloTabla = new DefaultTableModel(this.datos,this.encabezado);
         this.tabla = new JTable(modeloTabla);
@@ -120,7 +120,7 @@ public class VentanaJugador extends JInternalFrame{
     {
         Object[][]retorno=new Object[h][w];
         int i=0;
-        for(Jugador j:this.gestionDato.getJugadorList())
+        for(Jugador j:this.gestionDato.leerJugador())
         {
            retorno[i][0]=j.getId();
            retorno[i][1]=j.getNombre();
@@ -135,7 +135,7 @@ public class VentanaJugador extends JInternalFrame{
     }
     public void cargarCombo1(){
         this.combo1.removeAllItems();
-        for(Pais p: this.gestionDato.getPaisList())
+        for(Pais p: this.gestionDato.leerPais())
         {
             this.combo1.addItem(p.getNombre());
         }
@@ -143,7 +143,7 @@ public class VentanaJugador extends JInternalFrame{
     
     public void cargarCombo2(){
         this.combo2.removeAllItems();
-        for(Equipo e: this.gestionDato.getEquipoList())
+        for(Equipo e: this.gestionDato.leerEquipo())
         {
             this.combo2.addItem(e.getTorneo().getEstadio().getNombre());
         }

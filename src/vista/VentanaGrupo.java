@@ -70,7 +70,7 @@ public class VentanaGrupo extends JInternalFrame {
         this.encabezado[1]="Nombre";
         this.encabezado[2]="Numero del Equipo";
         
-        this.datos = cargaDatosTabla(this.gestionDato.getGrupoList().size(),3);
+        this.datos = cargaDatosTabla(this.gestionDato.leerGrupo().size(),3);
         
         this.boton.addActionListener(new EventoGrupo(this));
         
@@ -101,7 +101,7 @@ public class VentanaGrupo extends JInternalFrame {
     {
         Object[][]retorno=new Object[h][w];
         int i=0;
-        for(Grupo g:this.gestionDato.getGrupoList())
+        for(Grupo g:this.gestionDato.leerGrupo())
         {
            retorno[i][0]=g.getId();
            retorno[i][1]=g.getNombre();

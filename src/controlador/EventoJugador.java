@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Equipo;
 import modelo.Jugador;
@@ -61,7 +63,7 @@ public class EventoJugador implements ActionListener{
                 
                 String equipo=this.ventana.getCombo2().getSelectedItem().toString();
                
-                for (Jugador j:this.ventana.getGestionDato().getJugadorList()) 
+                for (Jugador j:this.ventana.getGestionDato().leerJugador()) 
                 {
                     if ((id == j.getId())&& (nombre == j.getNombre())&& (apellido == j.getApellido()) && (pais.equals(j.getPais().getNombre())) && (equipo.equals(j.getEquipo().getTorneo().getEstadio().getNombre())))
                     {
@@ -70,32 +72,37 @@ public class EventoJugador implements ActionListener{
                 }
           
            
-                for(Pais p:this.ventana.getGestionDato().getPaisList())
+                for(Pais p:this.ventana.getGestionDato().leerPais())
                 {
                
                     if(pais.equals(p.getNombre()))
                     {
                   
-                        for(Equipo equi:this.ventana.getGestionDato().getEquipoList())
+                        for(Equipo equi:this.ventana.getGestionDato().leerEquipo())
                         {
                             if(equipo.equals(equi.getTorneo().getEstadio().getNombre()))
                             {
                                 
                                         Jugador juga = new Jugador(id,nombre,apellido,p,equi);
-                                        JOptionPane.showMessageDialog(this.ventana,"Guardado");
-                                        ventana.getGestionDato().getJugadorList().add(juga);
                                         
-                                        //AQUI VA EL METODO PERSIST EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                                        this.ventana.getGestionDato().persistirJugador(juga);
-                                        //AQUI VA EL METODO LEE EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                                        this.ventana.getGestionDato().leerJugador();
+                                        JOptionPane.showMessageDialog(this.ventana,"Guardado");
+                                        
+                                        
+                                try {
+                                    //AQUI VA EL METODO PERSIST EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                                    this.ventana.getGestionDato().persistirJugador(juga);
+                                    //AQUI VA EL METODO LEE EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                                } catch (Exception ex) {
+                                    Logger.getLogger(EventoJugador.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                     
                                     }
                                 }
                             }
                         }
                     }
          
-           Object[][]datos=this.ventana.cargaDatosTabla(this.ventana.getGestionDato().getJugadorList().size(),5);
+           Object[][]datos=this.ventana.cargaDatosTabla(this.ventana.getGestionDato().leerJugador().size(),5);
            this.ventana.setDatos(datos);
            this.ventana.getModeloTabla().setDataVector(this.ventana.getDatos() , this.ventana.getEncabezado());
        

@@ -21,6 +21,9 @@ public class Grupo implements Serializable
     private String nombre;
     private int numeroEqui;
 
+    public Grupo() {
+    }
+
     public Grupo(Long id, String nombre, int numeroEqui) {
         this.id = id;
         this.nombre = nombre;
@@ -53,10 +56,6 @@ public class Grupo implements Serializable
         this.numeroEqui = numeroEqui;
     }
 
-    @Override
-    public String toString() {
-        return "Grupo{" + "id=" + id + ", nombre=" + nombre + ", numeroEqui=" + numeroEqui + '}';
-    }
-    
+   
 }
 

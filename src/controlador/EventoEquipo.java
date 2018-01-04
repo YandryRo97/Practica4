@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Equipo;
 import modelo.Grupo;
@@ -64,7 +66,7 @@ public class EventoEquipo implements ActionListener
                 
                 String grupo=this.ventanaEquipo.getCombo3().getSelectedItem().toString();
                 
-                for (Equipo eq:this.ventanaEquipo.getGestionDato().getEquipoList()) 
+                for (Equipo eq:this.ventanaEquipo.getGestionDato().leerEquipo()) 
                 {
                     if ((id == eq.getId())&& (pais.equals(eq.getPais().getNombre())) && (estTorneo.equals(eq.getTorneo().getEstadio()))&& (estTorneo.equals(eq.getGrupo().getNombre())))
                     {
@@ -73,27 +75,38 @@ public class EventoEquipo implements ActionListener
                 }
           
            
-                for(Pais p:this.ventanaEquipo.getGestionDato().getPaisList())
+                for(Pais p:this.ventanaEquipo.getGestionDato().leerPais())
                 {
                
                     if(pais.equals(p.getNombre()))
                     {
                   
-                        for(Torneo t:this.ventanaEquipo.getGestionDato().getTorneoList())
+                        for(Torneo t:this.ventanaEquipo.getGestionDato().leerTorneo())
                         {
                             if(estTorneo.equals(t.getEstadio().getNombre()))
                             {
-                                for(Grupo g:this.ventanaEquipo.getGestionDato().getGrupoList())
+                                for(Grupo g:this.ventanaEquipo.getGestionDato().leerGrupo())
                                 {
                                     if(grupo.equals(g.getNombre()))
                                     {
                                         Equipo equipo=new Equipo(id,numJug,p,t,g);
-                                        JOptionPane.showMessageDialog(this.ventanaEquipo,"Guardado");
-                                        ventanaEquipo.getGestionDato().getEquipoList().add(equipo);
                                         
-                                 //AQUI VA EL METODO PERSIST EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-                                        this.ventanaEquipo.getGestionDato().persistirEquipo(equipo);
-                                 //AQUI VA EL METODO LEE EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                                        JOptionPane.showMessageDialog(this.ventanaEquipo,"Guardado");
+                                        try {
+                                            this.ventanaEquipo.getGestionDato().persistirEquipo(equipo);
+                                            
+                                            
+                                            //AQUI VA EL METODO PERSIST EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                                            
+                                            //AQUI VA EL METODO LEE EQUIPO DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                                        } catch (Exception ex) {
+                                            Logger.getLogger(EventoEquipo.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                        
+                                        for(Equipo eq:this.ventanaEquipo.getGestionDato().leerEquipo())
+                                        {
+                                            this.ventanaEquipo.getGestionDato().leerEquipo();
+                                        }
                                  
                                     }
                                 }
@@ -101,16 +114,12 @@ public class EventoEquipo implements ActionListener
                         }
                     }
                     
-                    for(Equipo eq:this.getgD().getEquipoList())
-                                 {
-                                 
-                                    this.ventanaEquipo.getGestionDato().leerEquipo();
-                                 }
+                   
                 }
                
            }
            
-           Object[][]datosEquipo=this.ventanaEquipo.cargaDatosTabla(this.ventanaEquipo.getGestionDato().getEquipoList().size(),5);
+           Object[][]datosEquipo=this.ventanaEquipo.cargaDatosTabla(this.ventanaEquipo.getGestionDato().leerEquipo().size(),5);
            this.ventanaEquipo.setDatos(datosEquipo);
            this.ventanaEquipo.getModeloTabla().setDataVector(this.ventanaEquipo.getDatos(), this.ventanaEquipo.getEncabezado());
        

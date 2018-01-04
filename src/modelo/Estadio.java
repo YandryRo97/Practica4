@@ -22,6 +22,9 @@ public class Estadio implements Serializable
     private String ciudad;
     private Long capacidad;
 
+    public Estadio() {
+    }
+
     public Estadio(Long id, String nombre, String ciudad, Long capacidad) {
         this.id = id;
         this.nombre = nombre;
@@ -63,9 +66,6 @@ public class Estadio implements Serializable
         this.capacidad = capacidad;
     }
 
-    @Override
-    public String toString() {
-        return "Estadio{" + "id=" + id + ", nombre=" + nombre + ", ciudad=" + ciudad + ", capacidad=" + capacidad + '}';
-    }  
+    
 }
 

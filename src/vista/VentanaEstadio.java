@@ -178,7 +178,7 @@ public class VentanaEstadio extends JInternalFrame{
         this.encabezado[2] = "Ciudad";
         this.encabezado[3] = "Capacidad";
 
-        this.datos = cargaDatosTabla(this.gestionDato.getEstadioList().size(), 4);
+        this.datos = cargaDatosTabla(this.gestionDato.leerEstadio().size(), 4);
         this.modeloTabla = new DefaultTableModel(this.datos, this.encabezado);
         this.tabla = new JTable(modeloTabla);
         this.scroll = new JScrollPane(this.tabla);
@@ -205,7 +205,7 @@ public class VentanaEstadio extends JInternalFrame{
 
         Object[][] retorno = new Object[h][w];
         int i = 0;
-        for(Estadio es : this.gestionDato.getEstadioList()){
+        for(Estadio es : this.gestionDato.leerEstadio()){
             
             retorno[i][0] = es.getId();
             retorno[i][1] = es.getNombre();

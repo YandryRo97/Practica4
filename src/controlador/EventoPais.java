@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.Pais;
 import vista.VentanaPais;
@@ -46,7 +48,7 @@ public class EventoPais implements ActionListener{
                
                Long numHab=Long.parseLong(this.ventanaPais.getTxtList().get(3).getText());
                
-                for (Pais p:this.ventanaPais.getGestionDato().getPaisList()) 
+                for (Pais p:this.ventanaPais.getGestionDato().leerPais()) 
                 {
                     if (nombre.equals(p.getNombre()))
                     {
@@ -56,19 +58,27 @@ public class EventoPais implements ActionListener{
              
               
                Pais pa=new Pais(id,nombre,nacionalidad,numHab);
-               ventanaPais.getGestionDato().getPaisList().add(pa);
+               
                JOptionPane.showMessageDialog(this.ventanaPais,"Guardado");
                
-               //AQUI VA EL METODO PERSIST PAIS DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-               this.ventanaPais.getGestionDato().persistirPais(pa);
-               //AQUI VA EL METODO LEER PAIS DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
-               this.ventanaPais.getGestionDato().leerPais();
-                         
+               try {
+                   //AQUI VA EL METODO PERSIST PAIS DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+                   this.ventanaPais.getGestionDato().persistirPais(pa);
+                   //AQUI VA EL METODO LEER PAIS DE GESTION DATO QUE ANIADE LOS DATOS A LA TABLA DE LA BASE DE DATOS
+               } catch (Exception ex) {
+                   Logger.getLogger(EventoPais.class.getName()).log(Level.SEVERE, null, ex);
+               }
+               
+               for(Pais p:this.ventanaPais.getGestionDato().leerPais())
+                                        {
+                                            this.ventanaPais.getGestionDato().leerPais();
+                                        }
+               
                                 
             }
         
        
-        Object[][]datosPais=this.ventanaPais.cargaDatosTabla(this.ventanaPais.getGestionDato().getPaisList().size(),4);
+        Object[][]datosPais=this.ventanaPais.cargaDatosTabla(this.ventanaPais.getGestionDato().leerPais().size(),4);
         this.ventanaPais.setDatos(datosPais);
         this.ventanaPais.getModeloTabla().setDataVector(this.ventanaPais.getDatos(), this.ventanaPais.getEncabezado());
        

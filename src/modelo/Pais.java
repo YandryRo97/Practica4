@@ -22,6 +22,9 @@ public class Pais implements Serializable
     private String nacionalidad;
     private Long numHabitantes;
 
+    public Pais() {
+    }
+
     public Pais(Long id, String nombre, String nacionalidad, Long numHabitantes) {
         this.id = id;
         this.nombre = nombre;
@@ -61,13 +64,4 @@ public class Pais implements Serializable
         this.numHabitantes = numHabitantes;
     }
 
-    
-
-    
-
-    @Override
-    public String toString() {
-        return "Pais{" + "id=" + id + ", nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", numHabitantes=" + numHabitantes + '}';
-    }
-    
 }

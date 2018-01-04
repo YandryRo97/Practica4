@@ -20,6 +20,9 @@ public class Torneo implements Serializable {
     private String fechaIns;
     private Estadio estadio;
 
+    public Torneo() {
+    }
+
     public Torneo(Long id, String fechaIns, Estadio estadio) {
         this.id = id;
         this.fechaIns = fechaIns;
@@ -52,9 +55,4 @@ public class Torneo implements Serializable {
         this.estadio = estadio;
     }
 
-    @Override
-    public String toString() {
-        return "Torneo{" + "id=" + id + ", fechaIns=" + fechaIns + ", estadio=" + estadio + '}';
-    }
-    
 }

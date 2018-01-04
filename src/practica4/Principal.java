@@ -8,6 +8,8 @@ package practica4;
 import controlador.GestionDato;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Equipo;
 import modelo.Estadio;
 import modelo.Grupo;
@@ -41,16 +43,40 @@ public class Principal {
     Equipo e=new Equipo(Long.parseLong("171"),25,p,tor,gr);
     Jugador ju=new Jugador(Long.parseLong("181"),"Alex","Aguinaga",p,e);
         
-    GestionDato gd=new GestionDato(Eq,Pa,To,E,G,J);
+    GestionDato gd=new GestionDato();
     
-    gd.persistirPais(p);
-    gd.persistirEquipo(e);
-    gd.persistirGrupo(gr);
-    gd.persistirJugador(ju);
-    gd.persistirEstadio(est);
-    gd.persistirTorneo(tor);
+        try {
+            gd.persistirPais(p);
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gd.persistirEquipo(e);
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gd.persistirGrupo(gr);
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gd.persistirJugador(ju);
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gd.persistirEstadio(est);
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gd.persistirTorneo(tor);
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-    VentanaPrincipal v = new VentanaPrincipal("Archivos Binarios",gd);
+    VentanaPrincipal v = new VentanaPrincipal("Torneo",gd);
         v.setVisible(true);
     }
     
